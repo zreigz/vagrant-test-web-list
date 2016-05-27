@@ -1,0 +1,22 @@
+---
+
+- name: install net-tools
+  yum: name=net-tools
+  become: True
+
+- name: install bridge-utils
+  yum: name=bridge-utils
+  become: True
+  
+- name: install git
+  yum: name=git
+  become: True
+  
+- name: checkout kube-deploy
+  git: repo={{ repo }} dest=/home/vagrant/kube-deploy version={{ version }} accept_hostkey=yes
+  become: true
+  become_user: vagrant
+  become_method: sudo
+
+- name: start master
+  command: /home/vagrant/kube-deploy/docker-multinode/master.sh

@@ -1,0 +1,37 @@
+---
+
+- name: download kubectl
+  get_url: url=https://storage.googleapis.com/kubernetes-release/release/v1.2.0/bin/linux/amd64/kubectl dest=/usr/local/bin/kubectl mode=0755
+  
+- name: add redis deployment file
+  copy:
+    dest="/home/vagrant/redis-master-deployment.yaml"
+    owner="vagrant"
+    group="vagrant"
+    mode=755
+    src=redis-master-deployment.yaml
+
+- name: add redis service file
+  copy:
+    dest="/home/vagrant/redis-master-service.yaml"
+    owner="vagrant"
+    group="vagrant"
+    mode=755
+    src=redis-master-service.yaml
+
+
+- name: web-list file
+  copy:
+    dest="/home/vagrant/web-list.yaml"
+    owner="vagrant"
+    group="vagrant"
+    mode=755
+    src=web-list.yaml
+
+- wait_for: port=8080 delay=10
+
+- shell: /usr/local/bin/kubectl create -f /home/vagrant/redis-master-deployment.yaml
+
+- shell: /usr/local/bin/kubectl create -f /home/vagrant/redis-master-service.yaml
+
+- shell: /usr/local/bin/kubectl create -f /home/vagrant/web-list.yaml

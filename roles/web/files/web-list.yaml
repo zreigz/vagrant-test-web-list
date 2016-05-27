@@ -1,0 +1,38 @@
+kind: List
+apiVersion: v1
+items:
+- kind: ReplicationController
+  apiVersion: v1
+  metadata:
+    labels:
+      app: web-list
+    name: web-list
+  spec:
+    replicas: 1
+    selector:
+      app: web-list
+    template:
+      metadata:
+        labels:
+          app: web-list
+      spec:
+        containers:
+        - name: web-list
+          image: zreigz/web-list
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+- kind: Service
+  apiVersion: v1
+  metadata:
+    labels:
+      app: web-list
+    name: web-list
+  spec:
+    type: NodePort
+    ports:
+    - port: 80
+      targetPort: 8080
+    selector:
+      app: web-list

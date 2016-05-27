@@ -1,0 +1,2 @@
+repo: https://github.com/kubernetes/kube-deploy.git
+version: master

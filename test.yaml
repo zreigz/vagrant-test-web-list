@@ -1,0 +1,11 @@
+---
+- hosts: all
+  sudo: yes
+  roles:
+    - docker
+    - k8s
+    - web
+    
+  environment:
+    MASTER_IP: 10.9.8.7
+    NET_INTERFACE: eth1
